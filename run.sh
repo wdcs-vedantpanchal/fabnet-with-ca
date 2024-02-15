@@ -26,12 +26,12 @@ export CORE_PEER_ADDRESS=localhost:7051
 
 # # To Generate Genesis Block For Channel
 # export FABRIC_CFG_PATH=$PWD/configtx/
-# configtxgen -profile ChannelUsingRaft -outputBlock ./tempop10.block -channelID tempop10
+# configtxgen -profile ChannelUsingRaft -outputBlock ./tempchannel.block -channelID tempchannel
 
 # # To Join Orderer Node
 # export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.crt
 # export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.key
-# osnadmin channel join --channelID tempop10 --config-block ./tempop10.block -o localhost:7053 \
+# osnadmin channel join --channelID tempchannel --config-block ./tempchannel.block -o localhost:7053 \
 #     --ca-file /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/ca.crt --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" \
 #     --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
@@ -42,16 +42,16 @@ export CORE_PEER_ADDRESS=localhost:7051
 #     --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
 # # To Join A Channel, Make Sure ENV For This Operation Is Set
-# peer channel join -b ./tempop10.block
+# peer channel join -b ./tempchannel.block
 
 ## Here We Are Deploying `assetTransfer` Chaincode On Existing Testnet With Two Orgs.
 ## You Can Even Use It To Deploy Chaincode On Custom Network, Just Need To Add Commands For Other Peers Operation.
 
 # # To Generate Package Of Chaincode
-# peer lifecycle chaincode package temp11.tar.gz --path /home/codezeros/Desktop/tempFab/fabric-samples/asset-transfer-basic/chaincode-go --label temp11_1.0
+# peer lifecycle chaincode package tempchaincode.tar.gz --path ./tempChaincode --label tempchaincode_1.0
 
 # # To Install A Chaincode On Channel, Make Sure ENV For This Operation Is Set
-# peer lifecycle chaincode install temp11.tar.gz
+# peer lifecycle chaincode install  tempchaincode.tar.gz
 
 # # To Get List Of Chaincode Installed
 # peer lifecycle chaincode queryinstalled
@@ -59,28 +59,34 @@ export CORE_PEER_ADDRESS=localhost:7051
 # # To Approve Chaincode At Organization Level
 # # Note: Here For --cafile We Have Used Path Of Actual Or Original CA File To Show You Example,
 # # You Can Also Use CA File Path Located In MSP Directory.
-# peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID tempop10 --name temp11 \
-#     --version 1.0 --package-id temp11_1.0:b933add4c073212d220eac86263a35de400c9436f983cac69eb0e888ba7782da --sequence 1 --tls \
+# peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID tempchannel --name tempchaincode \
+#     --version 1.0 --package-id tempchaincode_1.0:2b965f07c136346ae800e477ac27e79bc67b3b89f17b9dad560c0c143ee1bc51 --sequence 1 --tls \
 #     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
 
 # # To Check Approvals Of Chaincode
-# peer lifecycle chaincode checkcommitreadiness --channelID tempop10 --name temp11 --version 1.0 --sequence 1 --tls \
+# peer lifecycle chaincode checkcommitreadiness --channelID tempchannel --name tempchaincode --version 1.0 --sequence 1 --tls \
 #  --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --output json
 
 # # To Commit Chaincode
-# peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID tempop10 --name temp11 \
+# peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID tempchannel --name tempchaincode \
 #     --version 1.0 --sequence 1 --tls --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:7051 \
 #     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem \
 #     --peerAddresses localhost:9051 --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
 
-## To Get Information About Chaincode Committed On Channel
-# peer lifecycle chaincode querycommitted --channelID tempop10 --name temp11
+# # To Get Information About Chaincode Committed On Channel
+# peer lifecycle chaincode querycommitted --channelID tempchannel --name tempchaincode
 
-## To Invoke Chaincode Method
+# # To Invoke Chaincode Method
 # peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
-#     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempop10 --name temp11 --peerAddresses localhost:7051 \
+#     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
 #     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
-#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"InitLedger","Args":[]}'
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"TempEventCaller","Args":[]}'
+
+# # To Invoke Chaincode Method
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"StoreDummyData","Args":["nodeData","tempdata","[]"]}'
 
 ## To Query Chaincode Data
-# peer chaincode query -C tempop10 -n temp11 -c '{"Args":["GetAllAssets"]}'
+# peer chaincode query -C tempchannel -n tempchaincode -c '{"Args":["GetData","tempdata"]}'

@@ -11,7 +11,6 @@ docker compose -f ./docker-compose-fabric-ca-server.yml up -d
 sleep 5
 
 sudo chmod -R 777 crypto-config
-cp crypto-config ./crypto-config/crypto/temp.sh
 cd crypto-config/crypto/ || exit 1
 
 tlsCert=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/tls-cert.pem
