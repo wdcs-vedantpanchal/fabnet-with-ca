@@ -1,11 +1,28 @@
 #!/bin/bash
 
-# Note: We Have Used Single CA For Orderer, Org1 And Org2.
-# So The Place Where You Need To Provide CA Cert Or Root CA Cert You Can Use Below Given Cert
-# CA Cert Path: /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
-# Basically We Have Just Pasted This Same Cert In Every MSP And TLS Directory Of Peer And User,
-# It Seem Repetitive But Fabric Follows This Architecture.
-
+# Note:
+# - We Have Total Two Organizations And One Orderer,
+#   Each Organization Have One Peer, One Admin And One User.
+#   You Can Check 'cryptoConfig.sh' To Check The Way We Are Generating Certificate Files,
+#   And You Can Also Check ./docker-compose-fabric-ca-server.yaml To Know The Way We Are Running CA Server.
+#   And You Can Generate Certificate Files For Other Organizations Same As We Have Created For Org1 And Org2.
+# 
+# - You Can Create Network With Multiple More Organizations, For That You Just Need To Modify ./configtx/Configtx.yaml File,
+#   Along With This You Also Have To Generate Certificate Files For Orgs,
+#   And Then You Just Need To Run Peer And For That You Can Check ./docker-compose.yaml File.
+# - We Have Used Single CA For Orderer, Org1 And Org2.
+#   So The Place Where You Need To Provide CA Cert Or Root CA Cert You Can Use Below Given Cert
+#   CA Cert Path: /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
+#   Basically We Have Just Pasted This Same Cert In Every MSP And TLS Directory Of Peer And User,
+#   It Seem Repetitive But Fabric Follows This Architecture.
+#
+# - Add Anchor Peer In Network, To Enable Discovery Service In Network.
+#   When You Will Interact With ChainCode Using Fabric Gateway Or SDK So At That Time You Will Be Requiring Discovery To Be Enabled.
+#   You Can Also Interact With ChainCode Using Fabric Gateway Or SDK Without Discovery Service,
+#   But In That Situation You Will Have To Define Endorse Peers, Along With This It Is Highly Suggested To Add AtLeast Single Anchor Peer.
+#   To Enable Anchor Peer You Can Use 'addAnchorPeer.sh' Script, You Can Create Anchor Peer In Both Organizations Or Only In Single Organization.
+#   Creating Multiple Anchor Peer Or Creating Anchor Peer In Each Organization Provides Fault Tolerance.
+# 
 export FABRIC_CFG_PATH=$PWD/config/
 
 export CORE_PEER_TLS_ENABLED=true
@@ -60,7 +77,7 @@ export CORE_PEER_ADDRESS=localhost:7051
 # # Note: Here For --cafile We Have Used Path Of Actual Or Original CA File To Show You Example,
 # # You Can Also Use CA File Path Located In MSP Directory.
 # peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID tempchannel --name tempchaincode \
-#     --version 1.0 --package-id tempchaincode_1.0:2b965f07c136346ae800e477ac27e79bc67b3b89f17b9dad560c0c143ee1bc51 --sequence 1 --tls \
+#     --version 1.0 --package-id tempchaincode_1.0:1ff13035c120d2e8486b4a4f5558a21e42f2bdc97abffd8f4c28f12fe4718469 --sequence 1 --tls \
 #     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
 
 # # To Check Approvals Of Chaincode

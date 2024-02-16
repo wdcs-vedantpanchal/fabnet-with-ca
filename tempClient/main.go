@@ -20,23 +20,23 @@ import (
 	"google.golang.org/grpc/credentials"
 )
 
-const (
-	peer1TLSFilePath    = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/peer0.org1/tls/ca.crt"
-	peer1Endpoint       = "localhost:7051"
-	peer1Name           = "peer0.org1.example.com"
-	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/signcerts/cert.pem"
-	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/0224f85b8daab025b8dba116eb1dbd9dca304d194482be421e633efb367fe132_sk"
-	mspID               = "Org1MSP"
-)
-
 // const (
-// 	peer1TLSFilePath    = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/peer0.org2/tls/ca.crt"
-// 	peer1Endpoint       = "localhost:9051"
-// 	peer1Name           = "peer0.org2.example.com"
-// 	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/signcerts/cert.pem"
-// 	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/keystore/902acfd5f71bfc135b1badf9a77ad951f4c2b1d49bf3016e6cef6c88f14abf65_sk"
-// 	mspID               = "Org2MSP"
+// 	peer1TLSFilePath    = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/peer0.org1/tls/ca.crt"
+// 	peer1Endpoint       = "localhost:7051"
+// 	peer1Name           = "peer0.org1.example.com"
+// 	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/signcerts/cert.pem"
+// 	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/0224f85b8daab025b8dba116eb1dbd9dca304d194482be421e633efb367fe132_sk"
+// 	mspID               = "Org1MSP"
 // )
+
+const (
+	peer1TLSFilePath    = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/peer0.org2/tls/ca.crt"
+	peer1Endpoint       = "localhost:9051"
+	peer1Name           = "peer0.org2.example.com"
+	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/signcerts/cert.pem"
+	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/keystore/902acfd5f71bfc135b1badf9a77ad951f4c2b1d49bf3016e6cef6c88f14abf65_sk"
+	mspID               = "Org2MSP"
+)
 
 func getCertificate(certificatePath string) *x509.Certificate {
 	certificateData, err := os.ReadFile(certificatePath)
@@ -109,7 +109,7 @@ func main() {
 	// mrg := attrmgr.New()
 	// fmt.Println(mrg.GetAttributesFromCert(getCertificate(user1SignCertPath)))
 
-	fmt.Println(contract.Submit("TempEventCaller", client.WithEndorsingOrganizations("Org1MSP", "Org2MSP")))
+	fmt.Println(contract.Submit("TempEventCaller"))
 
 	// temp, _ := json.Marshal([]string{"Op Bro101010"})
 	// fmt.Println(contract.Submit("StoreDummyData", client.WithArguments("NodeData", "Node4"), client.WithBytesArguments(temp)))
