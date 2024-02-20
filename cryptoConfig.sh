@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Note: This Script Is For Generating Crypto Material For Organizations And Orderers Using Fabric CA.
+
 # To Create 'crypto-config' Directory If It Does Not exist
 if [ ! -d ./crypto-config ]; then
     echo "Creating crypto-config Directory"
@@ -69,6 +71,10 @@ cp ../org1/peer0.org1/msp/keystore/* ../org1/peer0.org1/tls/server.key
 
 cp ../org1/peer0.org1/msp/tlscacerts/* ../org1/peer0.org1/msp/cacerts/0-0-0-0-7052.pem
 
+mv ../org1/peer0.org1/msp/keystore/* ../org1/peer0.org1/msp/keystore/private_key
+mv ../org1/admin.org1/msp/keystore/* ../org1/admin.org1/msp/keystore/private_key
+mv ../org1/user1.org1/msp/keystore/* ../org1/user1.org1/msp/keystore/private_key
+
 cp ../config.yaml ../org1/peer0.org1/msp
 cp ../config.yaml ../org1/admin.org1/msp
 cp ../config.yaml ../org1/user1.org1/msp
@@ -108,9 +114,56 @@ cp ../org2/peer0.org2/msp/keystore/* ../org2/peer0.org2/tls/server.key
 
 cp ../org2/peer0.org2/msp/tlscacerts/* ../org2/peer0.org2/msp/cacerts/0-0-0-0-7052.pem
 
+mv ../org2/peer0.org2/msp/keystore/* ../org2/peer0.org2/msp/keystore/private_key
+mv ../org2/admin.org2/msp/keystore/* ../org2/admin.org2/msp/keystore/private_key
+mv ../org2/user1.org2/msp/keystore/* ../org2/user1.org2/msp/keystore/private_key
+
 cp ../config.yaml ../org2/peer0.org2/msp
 cp ../config.yaml ../org2/admin.org2/msp
 cp ../config.yaml ../org2/user1.org2/msp
+
+#### Registration Of Org3 Certificates
+# Registering peer0.org3
+sudo ../../bin/fabric-ca-client register --home ./ --id.name peer0.org3 --id.secret peer0.org3pw --id.type peer \
+    --id.attrs tempdata=tempop.peer:ecert --tls.certfiles $tlsCert
+
+# Enrolling peer0.org3
+sudo ../../bin/fabric-ca-client enroll --home ../org3/peer0.org3 -u https://peer0.org3:peer0.org3pw@0.0.0.0:7052 \
+    --csr.cn peer0.org3.example.com --csr.hosts peer0.org3.example.com --csr.hosts localhost --csr.names OU=org3 \
+    --enrollment.profile tls --tls.certfiles $tlsCert
+
+# Registering admin.org3
+sudo ../../bin/fabric-ca-client register --home ./ --id.name admin.org3 --id.secret admin.org3pw --id.type admin \
+    --id.attrs tempdata=tempop.admin:ecert --tls.certfiles $tlsCert
+
+# Enrolling admin.org3
+sudo ../../bin/fabric-ca-client enroll --home ../org3/admin.org3 -u https://admin.org3:admin.org3pw@0.0.0.0:7052 \
+    --csr.cn admin.org3.example.com --csr.names OU=org3 --tls.certfiles $tlsCert
+
+# Registering user1.org3
+sudo ../../bin/fabric-ca-client register --home ./ --id.name user1.org3 --id.secret user1.org3pw --id.type user \
+    --id.attrs tempdata=tempop.user:ecert --tls.certfiles ./tls-cert.pem
+
+# Enrolling admin.org3
+sudo ../../bin/fabric-ca-client enroll --home ../org3/user1.org3 -u https://user1.org3:user1.org3pw@0.0.0.0:7052 \
+    --csr.cn user1.org3.example.com --csr.names OU=org3 --tls.certfiles $tlsCert
+
+sudo chmod -R 777 ../org3
+mkdir ../org3/peer0.org3/tls
+
+cp ../org3/peer0.org3/msp/tlscacerts/* ../org3/peer0.org3/tls/ca.crt
+cp ../org3/peer0.org3/msp/signcerts/* ../org3/peer0.org3/tls/server.crt
+cp ../org3/peer0.org3/msp/keystore/* ../org3/peer0.org3/tls/server.key
+
+cp ../org3/peer0.org3/msp/tlscacerts/* ../org3/peer0.org3/msp/cacerts/0-0-0-0-7052.pem
+
+mv ../org3/peer0.org3/msp/keystore/* ../org3/peer0.org3/msp/keystore/private_key
+mv ../org3/admin.org3/msp/keystore/* ../org3/admin.org3/msp/keystore/private_key
+mv ../org3/user1.org3/msp/keystore/* ../org3/user1.org3/msp/keystore/private_key
+
+cp ../config.yaml ../org3/peer0.org3/msp
+cp ../config.yaml ../org3/admin.org3/msp
+cp ../config.yaml ../org3/user1.org3/msp
 
 #### Registration Of Orderer Certificates
 # Registering peer0.org2
@@ -138,6 +191,9 @@ cp ../orderer/peer.orderer/msp/signcerts/* ../orderer/peer.orderer/tls/server.cr
 cp ../orderer/peer.orderer/msp/keystore/* ../orderer/peer.orderer/tls/server.key
 
 cp ../orderer/peer.orderer/msp/tlscacerts/* ../orderer/peer.orderer/msp/cacerts/0-0-0-0-7052.pem
+
+mv ../orderer/peer.orderer/msp/keystore/* ../orderer/peer.orderer/msp/keystore/private_key
+mv ../orderer/admin.orderer/msp/keystore/* ../orderer/admin.orderer/msp/keystore/private_key
 
 cp ../config.yaml ../orderer/peer.orderer/msp
 cp ../config.yaml ../orderer/admin.orderer/msp

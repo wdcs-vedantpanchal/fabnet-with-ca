@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Note:
-# - We Have Total Two Organizations And One Orderer,
+# - We Have Total Three Organizations And One Orderer,
 #   Each Organization Have One Peer, One Admin And One User.
 #   You Can Check 'cryptoConfig.sh' To Check The Way We Are Generating Certificate Files,
 #   And You Can Also Check ./docker-compose-fabric-ca-server.yaml To Know The Way We Are Running CA Server.
@@ -40,6 +40,12 @@ export CORE_PEER_ADDRESS=localhost:7051
 # export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/cacerts/0-0-0-0-7052.pem
 # export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp
 # export CORE_PEER_ADDRESS=localhost:9051
+
+# export CORE_PEER_TLS_ENABLED=true
+# export CORE_PEER_LOCALMSPID="Org3MSP"
+# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp/cacerts/0-0-0-0-7052.pem
+# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp
+# export CORE_PEER_ADDRESS=localhost:11051
 
 # # To Generate Genesis Block For Channel
 # export FABRIC_CFG_PATH=$PWD/configtx/

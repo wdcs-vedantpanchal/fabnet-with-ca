@@ -2,34 +2,34 @@
 
 export FABRIC_CFG_PATH=$PWD/config/
 
-# export CORE_PEER_TLS_ENABLED=true
-# export CORE_PEER_LOCALMSPID="Org1MSP"
-# # We Can Also Do Something Like This,
-# # export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
-# # Above Used Path Contains The Same Cert As Below Used Path,
-# # Under The Actually We Have Just Copied Below Given Cert From Above Given Path.
-# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/cacerts/0-0-0-0-7052.pem
-# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp
-# export CORE_PEER_ADDRESS=localhost:7051
-
 export CORE_PEER_TLS_ENABLED=true
-export CORE_PEER_LOCALMSPID="Org2MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/cacerts/0-0-0-0-7052.pem
-export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp
-export CORE_PEER_ADDRESS=localhost:9051
+export CORE_PEER_LOCALMSPID="Org1MSP"
+# We Can Also Do Something Like This,
+# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
+# Above Used Path Contains The Same Cert As Below Used Path,
+# Under The Actually We Have Just Copied Below Given Cert From Above Given Path.
+export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/cacerts/0-0-0-0-7052.pem
+export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp
+export CORE_PEER_ADDRESS=localhost:7051
+
+# export CORE_PEER_TLS_ENABLED=true
+# export CORE_PEER_LOCALMSPID="Org2MSP"
+# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/cacerts/0-0-0-0-7052.pem
+# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp
+# export CORE_PEER_ADDRESS=localhost:9051
 
 channelName="tempchannel"
 caCertFilePath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
 ordererAddress="localhost:7050"
 ordererTLSHostname="orderer.example.com"
 
-# mspId="Org1MSP"
-# host="peer0.org1.example.com"
-# port="7051"
+mspId="Org1MSP"
+host="peer0.org1.example.com"
+port="7051"
 
-mspId="Org2MSP"
-host="peer0.org2.example.com"
-port="9051"
+# mspId="Org2MSP"
+# host="peer0.org2.example.com"
+# port="9051"
 
 # Fetching Config Block From Orderer
 ./bin/peer channel fetch config config_block.pb -o $ordererAddress --ordererTLSHostnameOverride $ordererTLSHostname -c $channelName --tls --cafile $caCertFilePath
