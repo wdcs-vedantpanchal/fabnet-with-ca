@@ -166,37 +166,81 @@ cp ../config.yaml ../org3/admin.org3/msp
 cp ../config.yaml ../org3/user1.org3/msp
 
 #### Registration Of Orderer Certificates
-# Registering peer0.org2
-sudo ../../bin/fabric-ca-client register --home ./ --id.name peer.orderer --id.secret peer.ordererpw --id.type orderer \
+# Registering peer0.orderer
+sudo ../../bin/fabric-ca-client register --home ./ --id.name peer0.orderer --id.secret peer0.ordererpw --id.type orderer \
     --id.attrs tempdata=tempop.orderer:ecert --tls.certfiles $tlsCert
 
-# Enrolling peer0.org2
-sudo ../../bin/fabric-ca-client enroll --home ../orderer/peer.orderer -u https://peer.orderer:peer.ordererpw@0.0.0.0:7052 \
+# Enrolling peer0.orderer
+sudo ../../bin/fabric-ca-client enroll --home ../orderer/peer0.orderer -u https://peer0.orderer:peer0.ordererpw@0.0.0.0:7052 \
     --csr.cn orderer.example.com --csr.hosts orderer.example.com --csr.hosts localhost --csr.names OU=orderer \
     --enrollment.profile tls --tls.certfiles $tlsCert
 
-# Registering admin.org2
+# Registering admin.orderer
 sudo ../../bin/fabric-ca-client register --home ./ --id.name admin.orderer --id.secret admin.ordererpw --id.type admin \
     --id.attrs tempdata=tempop.admin:ecert --tls.certfiles $tlsCert
 
-# Enrolling admin.org2
+# Enrolling admin.orderer
 sudo ../../bin/fabric-ca-client enroll --home ../orderer/admin.orderer -u https://admin.orderer:admin.ordererpw@0.0.0.0:7052 \
     --csr.cn admin.orderer.example.com --csr.names OU=orderer --tls.certfiles $tlsCert
 
 sudo chmod -R 777 ../orderer
-mkdir ../orderer/peer.orderer/tls
+mkdir ../orderer/peer0.orderer/tls
 
-cp ../orderer/peer.orderer/msp/tlscacerts/* ../orderer/peer.orderer/tls/ca.crt
-cp ../orderer/peer.orderer/msp/signcerts/* ../orderer/peer.orderer/tls/server.crt
-cp ../orderer/peer.orderer/msp/keystore/* ../orderer/peer.orderer/tls/server.key
+cp ../orderer/peer0.orderer/msp/tlscacerts/* ../orderer/peer0.orderer/tls/ca.crt
+cp ../orderer/peer0.orderer/msp/signcerts/* ../orderer/peer0.orderer/tls/server.crt
+cp ../orderer/peer0.orderer/msp/keystore/* ../orderer/peer0.orderer/tls/server.key
 
-cp ../orderer/peer.orderer/msp/tlscacerts/* ../orderer/peer.orderer/msp/cacerts/0-0-0-0-7052.pem
+cp ../orderer/peer0.orderer/msp/tlscacerts/* ../orderer/peer0.orderer/msp/cacerts/0-0-0-0-7052.pem
 
-mv ../orderer/peer.orderer/msp/keystore/* ../orderer/peer.orderer/msp/keystore/private_key
+mv ../orderer/peer0.orderer/msp/keystore/* ../orderer/peer0.orderer/msp/keystore/private_key
 mv ../orderer/admin.orderer/msp/keystore/* ../orderer/admin.orderer/msp/keystore/private_key
 
-cp ../config.yaml ../orderer/peer.orderer/msp
+cp ../config.yaml ../orderer/peer0.orderer/msp
 cp ../config.yaml ../orderer/admin.orderer/msp
+
+# Registering peer1.orderer
+sudo ../../bin/fabric-ca-client register --home ./ --id.name peer1.orderer --id.secret peer1.ordererpw --id.type orderer \
+    --id.attrs tempdata=tempop.orderer:ecert --tls.certfiles $tlsCert
+
+# Enrolling peer1.orderer
+sudo ../../bin/fabric-ca-client enroll --home ../orderer/peer1.orderer -u https://peer1.orderer:peer1.ordererpw@0.0.0.0:7052 \
+    --csr.cn orderer1.example.com --csr.hosts orderer1.example.com --csr.hosts localhost --csr.names OU=orderer \
+    --enrollment.profile tls --tls.certfiles $tlsCert
+
+sudo chmod -R 777 ../orderer
+mkdir ../orderer/peer1.orderer/tls
+
+cp ../orderer/peer1.orderer/msp/tlscacerts/* ../orderer/peer1.orderer/tls/ca.crt
+cp ../orderer/peer1.orderer/msp/signcerts/* ../orderer/peer1.orderer/tls/server.crt
+cp ../orderer/peer1.orderer/msp/keystore/* ../orderer/peer1.orderer/tls/server.key
+
+cp ../orderer/peer1.orderer/msp/tlscacerts/* ../orderer/peer1.orderer/msp/cacerts/0-0-0-0-7052.pem
+
+mv ../orderer/peer1.orderer/msp/keystore/* ../orderer/peer1.orderer/msp/keystore/private_key
+
+cp ../config.yaml ../orderer/peer1.orderer/msp
+
+# Registering peer2.orderer
+sudo ../../bin/fabric-ca-client register --home ./ --id.name peer2.orderer --id.secret peer2.ordererpw --id.type orderer \
+    --id.attrs tempdata=tempop.orderer:ecert --tls.certfiles $tlsCert
+
+# Enrolling peer2.orderer
+sudo ../../bin/fabric-ca-client enroll --home ../orderer/peer2.orderer -u https://peer2.orderer:peer2.ordererpw@0.0.0.0:7052 \
+    --csr.cn orderer2.example.com --csr.hosts orderer2.example.com --csr.hosts localhost --csr.names OU=orderer \
+    --enrollment.profile tls --tls.certfiles $tlsCert
+
+sudo chmod -R 777 ../orderer
+mkdir ../orderer/peer2.orderer/tls
+
+cp ../orderer/peer2.orderer/msp/tlscacerts/* ../orderer/peer2.orderer/tls/ca.crt
+cp ../orderer/peer2.orderer/msp/signcerts/* ../orderer/peer2.orderer/tls/server.crt
+cp ../orderer/peer2.orderer/msp/keystore/* ../orderer/peer2.orderer/tls/server.key
+
+cp ../orderer/peer2.orderer/msp/tlscacerts/* ../orderer/peer2.orderer/msp/cacerts/0-0-0-0-7052.pem
+
+mv ../orderer/peer2.orderer/msp/keystore/* ../orderer/peer2.orderer/msp/keystore/private_key
+
+cp ../config.yaml ../orderer/peer2.orderer/msp
 
 # docker compose -f ./docker-compose-fabric-ca-server.yml down
 # sleep 2

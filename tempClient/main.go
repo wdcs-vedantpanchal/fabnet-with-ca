@@ -25,7 +25,7 @@ const (
 	peer1Endpoint       = "localhost:7051"
 	peer1Name           = "peer0.org1.example.com"
 	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/signcerts/cert.pem"
-	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/a07395e81fc90371772a8d46f901c2d85a026830d40a4add93cacdbea34c7651_sk"
+	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/private_key"
 	mspID               = "Org1MSP"
 )
 
@@ -34,7 +34,7 @@ const (
 // 	peer1Endpoint       = "localhost:9051"
 // 	peer1Name           = "peer0.org2.example.com"
 // 	user1SignCertPath   = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/signcerts/cert.pem"
-// 	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/keystore/7b32929e6bdc9727821c3e3d3558c5ff3cb92869e7c87410a700fd02c51df286_sk"
+// 	user1PrivateKeyPath = "/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/keystore/private_key"
 // 	mspID               = "Org2MSP"
 // )
 

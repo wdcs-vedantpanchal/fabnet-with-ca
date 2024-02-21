@@ -1,0 +1,23 @@
+version: '3.7'
+
+networks:
+  test:
+    name: tempNet
+    external: true
+
+volumes:
+  pgadmin-data:
+
+
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: password@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin

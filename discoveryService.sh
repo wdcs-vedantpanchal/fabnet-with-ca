@@ -9,7 +9,7 @@ channelId="tempchannel"
 chaincodeId="tempchaincode"
 caCertPath="/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/peer0.org1/tls/ca.crt"
 userSignCertPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/signcerts/cert.pem
-userKeyPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/a07395e81fc90371772a8d46f901c2d85a026830d40a4add93cacdbea34c7651_sk
+userKeyPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/keystore/private_key
 
 # To Get List Of Peers In Channel
 discover peers --MSP $mspId --channel $channelId --server $serverAddress --peerTLSCA $caCertPath --userCert $userSignCertPath --userKey $userKeyPath

@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Note:
-# - We Have Total Three Organizations And One Orderer,
+# - We Have Total Three Organizations And Three Orderer Peers,
 #   Each Organization Have One Peer, One Admin And One User.
 #   You Can Check 'cryptoConfig.sh' To Check The Way We Are Generating Certificate Files,
 #   And You Can Also Check ./docker-compose-fabric-ca-server.yaml To Know The Way We Are Running CA Server.
 #   And You Can Generate Certificate Files For Other Organizations Same As We Have Created For Org1 And Org2.
-# 
+#
 # - You Can Create Network With Multiple More Organizations, For That You Just Need To Modify ./configtx/Configtx.yaml File,
 #   Along With This You Also Have To Generate Certificate Files For Orgs,
 #   And Then You Just Need To Run Peer And For That You Can Check ./docker-compose.yaml File.
-# - We Have Used Single CA For Orderer, Org1 And Org2.
+# - We Have Used Single CA For Orderers, Org1 And Org2.
 #   So The Place Where You Need To Provide CA Cert Or Root CA Cert You Can Use Below Given Cert
 #   CA Cert Path: /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
 #   Basically We Have Just Pasted This Same Cert In Every MSP And TLS Directory Of Peer And User,
@@ -22,46 +22,63 @@
 #   But In That Situation You Will Have To Define Endorse Peers, Along With This It Is Highly Suggested To Add AtLeast Single Anchor Peer.
 #   To Enable Anchor Peer You Can Use 'addAnchorPeer.sh' Script, You Can Create Anchor Peer In Both Organizations Or Only In Single Organization.
 #   Creating Multiple Anchor Peer Or Creating Anchor Peer In Each Organization Provides Fault Tolerance.
-# 
+#
 export FABRIC_CFG_PATH=$PWD/config/
 
-export CORE_PEER_TLS_ENABLED=true
-export CORE_PEER_LOCALMSPID="Org1MSP"
-# We Can Also Do Something Like This,
-# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
-# Above Used Path Contains The Same Cert As Below Used Path,
-# Under The Actually We Have Just Copied Below Given Cert From Above Given Path.
-export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/cacerts/0-0-0-0-7052.pem
-export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp
-export CORE_PEER_ADDRESS=localhost:7051
+# # Exporting ENV To Interact With peer0.org0
+# export CORE_PEER_TLS_ENABLED=true
+# export CORE_PEER_LOCALMSPID="Org1MSP"
+# # We Can Also Do Something Like This,
+# # export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem
+# # Above Used Path Contains The Same Cert As Below Used Path,
+# # Under The Actually We Have Just Copied Below Given Cert From Above Given Path.
+# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp/cacerts/0-0-0-0-7052.pem
+# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org1/admin.org1/msp
+# export CORE_PEER_ADDRESS=localhost:7051
 
+# # Exporting ENV To Interact With peer0.org1
 # export CORE_PEER_TLS_ENABLED=true
 # export CORE_PEER_LOCALMSPID="Org2MSP"
 # export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp/cacerts/0-0-0-0-7052.pem
 # export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp
 # export CORE_PEER_ADDRESS=localhost:9051
 
-# export CORE_PEER_TLS_ENABLED=true
-# export CORE_PEER_LOCALMSPID="Org3MSP"
-# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp/cacerts/0-0-0-0-7052.pem
-# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp
-# export CORE_PEER_ADDRESS=localhost:11051
+# Exporting ENV To Interact With peer0.org2
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_LOCALMSPID="Org3MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp/cacerts/0-0-0-0-7052.pem
+export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp
+export CORE_PEER_ADDRESS=localhost:11051
 
 # # To Generate Genesis Block For Channel
 # export FABRIC_CFG_PATH=$PWD/configtx/
 # configtxgen -profile ChannelUsingRaft -outputBlock ./tempchannel.block -channelID tempchannel
 
+# # Exporting ENV To Interact With Orderer
+# export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer0.orderer/tls/server.crt
+# export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer0.orderer/tls/server.key
+# caCertPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer0.orderer/tls/ca.crt
+# ordererAdminListenAddress=localhost:7053
+
+# # Exporting ENV To Interact With Orderer1
+# export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer2.orderer/tls/server.crt
+# export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer2.orderer/tls/server.key
+# caCertPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer1.orderer/tls/ca.crt
+# ordererAdminListenAddress=localhost:8053
+
+# # Exporting ENV To Interact With Orderer2
+# export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer1.orderer/tls/server.crt
+# export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer1.orderer/tls/server.key
+# caCertPath=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer2.orderer/tls/ca.crt
+# ordererAdminListenAddress=localhost:9053
+
 # # To Join Orderer Node
-# export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.crt
-# export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.key
-# osnadmin channel join --channelID tempchannel --config-block ./tempchannel.block -o localhost:7053 \
-#     --ca-file /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/ca.crt --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" \
+# osnadmin channel join --channelID tempchannel --config-block ./tempchannel.block -o $ordererAdminListenAddress \
+#     --ca-file $caCertPath --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" \
 #     --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
 # # To List Channels Throught Which Orderer Node Is Connected
-# export ORDERER_ADMIN_TLS_SIGN_CERT=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.crt
-# export ORDERER_ADMIN_TLS_PRIVATE_KEY=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/server.key
-# osnadmin channel list -o localhost:7053 --ca-file /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/orderer/peer.orderer/tls/ca.crt \
+# osnadmin channel list -o $ordererAdminListenAddress --ca-file $caCertPath \
 #     --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 
 # # To Join A Channel, Make Sure ENV For This Operation Is Set
@@ -99,11 +116,11 @@ export CORE_PEER_ADDRESS=localhost:7051
 # # To Get Information About Chaincode Committed On Channel
 # peer lifecycle chaincode querycommitted --channelID tempchannel --name tempchaincode
 
-# # To Invoke Chaincode Method
-# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
-#     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
-#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
-#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"TempEventCaller","Args":[]}'
+# To Invoke Chaincode Method
+peer chaincode invoke -o localhost:9050 --ordererTLSHostnameOverride orderer2.example.com --tls \
+    --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
+    --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
+    --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"TempEventCaller","Args":[]}'
 
 # # To Invoke Chaincode Method
 # peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
