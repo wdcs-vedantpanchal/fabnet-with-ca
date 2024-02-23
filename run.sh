@@ -43,12 +43,12 @@ export FABRIC_CFG_PATH=$PWD/config/
 # export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org2/admin.org2/msp
 # export CORE_PEER_ADDRESS=localhost:9051
 
-# Exporting ENV To Interact With peer0.org2
-export CORE_PEER_TLS_ENABLED=true
-export CORE_PEER_LOCALMSPID="Org3MSP"
-export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp/cacerts/0-0-0-0-7052.pem
-export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp
-export CORE_PEER_ADDRESS=localhost:11051
+# # Exporting ENV To Interact With peer0.org2
+# export CORE_PEER_TLS_ENABLED=true
+# export CORE_PEER_LOCALMSPID="Org3MSP"
+# export CORE_PEER_TLS_ROOTCERT_FILE=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp/cacerts/0-0-0-0-7052.pem
+# export CORE_PEER_MSPCONFIGPATH=/home/codezeros/Desktop/tempFab/tempopnet/crypto-config/org3/admin.org3/msp
+# export CORE_PEER_ADDRESS=localhost:11051
 
 # # To Generate Genesis Block For Channel
 # export FABRIC_CFG_PATH=$PWD/configtx/
@@ -116,11 +116,11 @@ export CORE_PEER_ADDRESS=localhost:11051
 # # To Get Information About Chaincode Committed On Channel
 # peer lifecycle chaincode querycommitted --channelID tempchannel --name tempchaincode
 
-# To Invoke Chaincode Method
-peer chaincode invoke -o localhost:9050 --ordererTLSHostnameOverride orderer2.example.com --tls \
-    --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
-    --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
-    --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"TempEventCaller","Args":[]}'
+# # To Invoke Chaincode Method
+# peer chaincode invoke -o localhost:9050 --ordererTLSHostnameOverride orderer2.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --channelID tempchannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/tempopnet/crypto-config/crypto/ca-cert.pem -c '{"function":"TempEventCaller","Args":[]}'
 
 # # To Invoke Chaincode Method
 # peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
@@ -130,3 +130,23 @@ peer chaincode invoke -o localhost:9050 --ordererTLSHostnameOverride orderer2.ex
 
 ## To Query Chaincode Data
 # peer chaincode query -C tempchannel -n tempchaincode -c '{"Args":["GetData","tempdata"]}'
+
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt --channelID mychannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"TempEventCaller","Args":[]}'
+
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt --channelID mychannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"TempEventCaller","Args":[]}'
+
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt --channelID mychannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"TempEventCaller","Args":[]}'
+
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls \
+#     --cafile /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt --channelID mychannel --name tempchaincode --peerAddresses localhost:7051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses localhost:9051 \
+#     --tlsRootCertFiles /home/codezeros/Desktop/tempFab/fabric-samples/test-network/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"TempEventCaller","Args":[]}'

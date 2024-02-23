@@ -132,10 +132,10 @@ func (contract *TempContract) TempEventCaller(ctx contractapi.TransactionContext
 	return nil
 }
 
-func (contract *TempContract) GetAttributeGetter(ctx contractapi.TransactionContextInterface, attributeName string) error {
-	fmt.Println(ctx.GetClientIdentity().GetAttributeValue(attributeName))
-	return nil
-}
+// func (contract *TempContract) GetAttributeGetter(ctx contractapi.TransactionContextInterface, attributeName string) error {
+// 	fmt.Println(ctx.GetClientIdentity().GetAttributeValue(attributeName))
+// 	return nil
+// }
 
 func (contract *TempContract) TempChainCodeCaller(ctx contractapi.TransactionContextInterface) error {
 	fmt.Println(ctx.GetStub().InvokeChaincode("tempchaincodeop10", [][]byte{[]byte("GetData"), []byte("Node4")}, "tempchannel"))
